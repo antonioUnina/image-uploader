@@ -1,0 +1,32 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: image-uploader
+  namespace: image-upload
+  labels:
+    app: image-uploader
+    app.kubernetes.io/component: image-uploader
+    app.kubernetes.io/instance: image-uploader
+    app.kubernetes.io/name: image-uploader
+    app.kubernetes.io/part-of: image-uploader-app
+    app.openshift.io/runtime: php
+    app.openshift.io/runtime-version: 7.4-ubi8
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: 8443-tcp
+      protocol: TCP
+      port: 8443
+      targetPort: 8443
+  selector:
+    app: image-uploader
+    deploymentconfig: image-uploader
+  type: ClusterIP
+  sessionAffinity: None
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+
