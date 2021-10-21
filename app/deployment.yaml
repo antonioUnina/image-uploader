@@ -1,0 +1,60 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+  name: image-uploader
+  namespace: image-upload
+  labels:
+    app: image-uploader
+    app.kubernetes.io/component: image-uploader
+    app.kubernetes.io/instance: image-uploader
+    app.kubernetes.io/name: image-uploader
+    app.kubernetes.io/part-of: image-uploader-app
+    app.openshift.io/runtime: php
+    app.openshift.io/runtime-version: 7.4-ubi8
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-uploader
+  template:
+    metadata:
+      labels:
+        app: image-uploader
+        deploymentconfig: image-uploader
+    spec:
+      restartPolicy: Always
+      serviceAccountName: runasuid
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      securityContext: {}
+      containers:
+        - name: image-uploader
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/image-upload/image-uploader@sha256:d0675f1814a70ee15cb74d2b551761393e1f98f468f03fe6485dead27756cee3
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - name: nfs-pvc
+              mountPath: /opt/app-root/src/uploads
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      serviceAccount: runasuid
+      volumes:
+        - name: nfs-pvc
+          persistentVolumeClaim:
+            claimName: nfs-pvc
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+
