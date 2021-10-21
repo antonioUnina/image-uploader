@@ -43,8 +43,6 @@ spec:
           name: image-uploader-github-webhook-secret
     - type: ImageChange
       imageChange:
-        lastTriggeredImageID: >-
-          image-registry.openshift-image-registry.svc:5000/openshift/php@sha256:6ba5a3d151e8b48dd45c71b9629c216f83e9b7c8404b87d7c6830b18eab9d3bb
     - type: ConfigChange
   runPolicy: Serial
 
