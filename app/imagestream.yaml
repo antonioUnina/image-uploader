@@ -1,0 +1,17 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+  name: image-uploader
+  namespace: image-upload
+  labels:
+    app: image-uploader
+    app.kubernetes.io/component: image-uploader
+    app.kubernetes.io/instance: image-uploader
+    app.kubernetes.io/name: image-uploader
+    app.kubernetes.io/part-of: image-uploader-app
+    app.openshift.io/runtime: php
+    app.openshift.io/runtime-version: 7.4-ubi8
+spec:
+  lookupPolicy:
+    local: false

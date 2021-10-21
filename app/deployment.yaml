@@ -30,8 +30,7 @@ spec:
       securityContext: {}
       containers:
         - name: image-uploader
-          image: >-
-            image-registry.openshift-image-registry.svc:5000/image-upload/image-uploader@sha256:d0675f1814a70ee15cb74d2b551761393e1f98f468f03fe6485dead27756cee3
+          image: image-registry.openshift-image-registry.svc:5000/image-upload/image-uploader
           ports:
             - containerPort: 8080
               protocol: TCP
