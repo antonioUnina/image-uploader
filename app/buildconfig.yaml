@@ -1,0 +1,50 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  annotations:
+  name: image-uploader
+  namespace: image-upload
+  labels:
+    app: image-uploader
+    app.kubernetes.io/component: image-uploader
+    app.kubernetes.io/instance: image-uploader
+    app.kubernetes.io/name: image-uploader
+    app.kubernetes.io/part-of: image-uploader-app
+    app.openshift.io/runtime: php
+    app.openshift.io/runtime-version: 7.4-ubi8
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'image-uploader:latest'
+  resources: {}
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: openshift
+        name: 'php:7.4-ubi8'
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/antonioUnina/image-uploader'
+    contextDir: /
+  triggers:
+    - type: Generic
+      generic:
+        secretReference:
+          name: image-uploader-generic-webhook-secret
+    - type: GitHub
+      github:
+        secretReference:
+          name: image-uploader-github-webhook-secret
+    - type: ImageChange
+      imageChange:
+        lastTriggeredImageID: >-
+          image-registry.openshift-image-registry.svc:5000/openshift/php@sha256:6ba5a3d151e8b48dd45c71b9629c216f83e9b7c8404b87d7c6830b18eab9d3bb
+    - type: ConfigChange
+  runPolicy: Serial
+
