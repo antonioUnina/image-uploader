@@ -42,7 +42,7 @@ spec:
         secretReference:
           name: image-uploader-github-webhook-secret
     - type: ImageChange
-      imageChange:
+      imageChange: {}
     - type: ConfigChange
   runPolicy: Serial
 
