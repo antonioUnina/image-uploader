@@ -54,7 +54,7 @@ img {
 <div id="body-wrapper">
 <?php 
 echo "
-<h1>Image Library with " . $storage_type . " NFS storage backend.</h1>
+<h1>OCP Image Library with " . $storage_type . " NFS storage backend.</h1>
 "
 ?>
 <div class="wrapper" id="upload-form">
