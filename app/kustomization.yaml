@@ -1,4 +1,5 @@
 resources:
+- nfs-pvc.yaml
 - imagestream.yaml
 - buildconfig.yaml
 - deployment.yaml
