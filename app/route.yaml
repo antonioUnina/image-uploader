@@ -12,7 +12,6 @@ metadata:
     app.openshift.io/runtime: php
     app.openshift.io/runtime-version: 7.4-ubi8
 spec:
-  host: image-uploader.apps.cr-ocp-coll.dt.tesoro.it
   to:
     kind: Service
     name: image-uploader
